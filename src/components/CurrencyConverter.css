@@ -48,6 +48,7 @@
 
     -webkit-appearance: none;
     -webkit-border-radius: 0px;
+    padding-left: 24px;
 }
 
 .currency__selector-caret{

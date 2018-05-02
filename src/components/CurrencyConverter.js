@@ -1,56 +1,62 @@
+// @flow
 import React, { Component } from 'react';
 
 import './CurrencyConverter.css';
 
-class CurrencyConverter extends Component {
-  constructor(props) {
+type Props = {
+  currencies: { [key: string]: number },
+  test: boolean
+};
+
+type State = {
+  amount: number,
+  selectedCurrency: string
+}
+
+class CurrencyConverter extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    this.state = { amount: 0 };
 
-    this.handleAmountChanged = this.handleAmountChanged.bind(this);
-    this.convertCurrency = this.convertCurrency.bind(this);
+    this.state = { amount: 0, selectedCurrency: Object.keys(this.props.currencies)[0] };
+    this.onAmountChange = this.onAmountChange.bind(this);
+    this.onCurrencyChange = this.onCurrencyChange.bind(this);
   }
 
-  componentDidMount() {
-    fetch('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR')
-      .then(
-        res => res.json().then(
-          data => {
-            this.setState({ currencies: data });
-            this.convertCurrency();
-          }
-        )
-      )
-      .catch(error => console.log(error))
-  }
-
-  handleAmountChanged(e) {
-    let newAmount = parseFloat(e.target.value);
-    if (isNaN(newAmount)) newAmount = 0;
-    this.setState({ amount: newAmount });
+  onAmountChange(e) {
+    let amount = parseFloat(e.target.value);
+    if (isNaN(amount)) amount = 0;
+    this.setState({ amount: amount });
   }
 
   convertCurrency() {
-    const convertingResult = (this.state.amount * this.state.currencies['USD']).toFixed(2);
-    this.setState({ convertingResult: convertingResult });
+    return (this.state.amount * this.props.currencies[this.state.selectedCurrency]).toFixed(2);
+  }
+
+  renderCurrenySelector() {
+    return (
+      <select className="currency__selector" onChange={this.onCurrencyChange}>
+        {
+          Object.keys(this.props.currencies)
+            .map(currency => <option key={currency} value={currency}>{currency}</option>)
+        }
+      </select>
+    );
+  }
+
+  onCurrencyChange(e) {
+    this.setState({ selectedCurrency: e.target.value });
   }
 
   render() {
     return (
       <div>
-        <div className="currency__title">USD</div>
-        <div className="currency__converting-result">{this.state.convertingResult}</div>
+        <div className="currency__title">{this.state.selectedCurrency}</div>
+        <div className="currency__converting-result">{this.convertCurrency()}</div>
 
         <div className="input-group currency__input-group">
-          <input type="number" className="currency__amount-input" value={this.state.amount} onChange={this.handleAmountChanged} />
-          <select className="currency__selector" defaultValue="USD">
-            <option value="usd">USD</option>
-          </select>
+          <input type="number" className="currency__amount-input" value={this.state.amount} onChange={this.onAmountChange} />
+          {this.renderCurrenySelector()}
         </div>
-
-        <button type="button" className="btn currency__convert-btn" onClick={this.convertCurrency}>
-          Convert
-        </button>
 
       </div>
     );
