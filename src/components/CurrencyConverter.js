@@ -18,11 +18,11 @@ class CurrencyConverter extends Component<Props, State> {
     super(props);
 
     this.state = { amount: 0, selectedCurrency: Object.keys(this.props.currencies)[0] };
-    this.onAmountChange = this.onAmountChange.bind(this);
-    this.onCurrencyChange = this.onCurrencyChange.bind(this);
+    (this: any).onAmountChange = this.onAmountChange.bind(this);
+    (this: any).onCurrencyChange = this.onCurrencyChange.bind(this);
   }
 
-  onAmountChange(e) {
+  onAmountChange(e: SyntheticInputEvent<HTMLInputElement>) {
     let amount = parseFloat(e.target.value);
     if (isNaN(amount)) amount = 0;
     this.setState({ amount: amount });
@@ -43,7 +43,7 @@ class CurrencyConverter extends Component<Props, State> {
     );
   }
 
-  onCurrencyChange(e) {
+  onCurrencyChange(e: SyntheticInputEvent<HTMLSelectElement>) {
     this.setState({ selectedCurrency: e.target.value });
   }
 
