@@ -16,6 +16,7 @@ function setup() {
             JPY: 3
         }
     };
+    console.log(1);
     const enzymeWrapper = mount(<CurrencyConverter {...props} />);
     return {
         props,
