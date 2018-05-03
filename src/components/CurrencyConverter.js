@@ -33,12 +33,12 @@ class CurrencyConverter extends Component<Props, State> {
   }
 
   renderCurrenySelector() {
+    const options = Object.keys(this.props.currencies).map(
+      currency => <option key={currency} value={currency}>{currency}</option>
+    );
     return (
       <select className="currency__selector" onChange={this.onCurrencyChange}>
-        {
-          Object.keys(this.props.currencies)
-            .map(currency => <option key={currency} value={currency}>{currency}</option>)
-        }
+        {options}
       </select>
     );
   }
