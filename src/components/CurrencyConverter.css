@@ -3,7 +3,7 @@
 }
 
 .currency__title,
-.currency__converting-result {
+.currency__result {
     font-size: 72px;
     font-weight: bold;
     font-style: normal;
@@ -48,6 +48,7 @@
 
     -webkit-appearance: none;
     -webkit-border-radius: 0px;
+    padding-left: 24px;
 }
 
 .currency__selector-caret{
