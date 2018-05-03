@@ -15,5 +15,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "flow": "flow"
+  },
+  "devDependencies": {
+    "react-test-renderer": "^16.3.2"
   }
 }

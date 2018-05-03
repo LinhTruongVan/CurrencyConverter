@@ -51,7 +51,7 @@ class CurrencyConverter extends Component<Props, State> {
     return (
       <div>
         <div className="currency__title">{this.state.selectedCurrency}</div>
-        <div className="currency__converting-result">{this.convertCurrency()}</div>
+        <div className="currency__result">{this.convertCurrency()}</div>
 
         <div className="input-group currency__input-group">
           <input type="number" className="currency__amount-input" value={this.state.amount} onChange={this.onAmountChange} />
